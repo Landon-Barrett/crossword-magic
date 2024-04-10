@@ -54,10 +54,14 @@ public class MainActivity extends AppCompatActivity implements AbstractView {
 
         if (name.equals(CrosswordMagicController.TEST_PROPERTY)) {
 
-            binding.output.setText("Number of Words in Default Puzzle: " + value);
+            //binding.output.setText("Number of Words in Default Puzzle: " + value);
 
         }
 
+    }
+
+    public CrosswordMagicController getController() {
+        return controller;
     }
 
 }
