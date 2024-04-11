@@ -31,7 +31,7 @@ public class TabLayoutAdapter extends FragmentStateAdapter {
             fragment = new ClueFragment();
 
             Bundle args = new Bundle();
-            args.putInt(PuzzleFragment.ARG_ID, position + 1);
+            args.putInt(ClueFragment.ARG_ID, position + 1);
             fragment.setArguments(args);
         }
 

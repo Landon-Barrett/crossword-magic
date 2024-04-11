@@ -16,6 +16,8 @@ public class CrosswordMagicModel extends AbstractModel {
     private Integer[] dimensions = {0, 0};
     private Character[][] letters;
     private Integer[][] numbers;
+    private String cluesAcross;
+    private String cluesDown;
 
     public CrosswordMagicModel(Context context) {
 
@@ -47,6 +49,20 @@ public class CrosswordMagicModel extends AbstractModel {
         numbers = puzzle.getNumbers();
 
         firePropertyChange(CrosswordMagicController.GRID_NUMBERS_PROPERTY, null, numbers);
+    }
+
+    public void getCluesAcrossProperty() {
+
+        cluesAcross = puzzle.getCluesAcross();
+
+        firePropertyChange(CrosswordMagicController.CLUES_ACROSS_PROPERTY, null, cluesAcross);
+    }
+
+    public void getCluesDownProperty() {
+
+        cluesDown = puzzle.getCluesDown();
+
+        firePropertyChange(CrosswordMagicController.CLUES_DOWN_PROPERTY, null, cluesDown);
     }
 
     public void getTestProperty() {
