@@ -2,9 +2,11 @@ package edu.jsu.mcis.cs408.crosswordmagic.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.text.InputType;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -12,9 +14,11 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 
 import java.beans.PropertyChangeEvent;
 import java.util.Arrays;
@@ -22,7 +26,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import edu.jsu.mcis.cs408.crosswordmagic.R;
 import edu.jsu.mcis.cs408.crosswordmagic.controller.CrosswordMagicController;
+import edu.jsu.mcis.cs408.crosswordmagic.model.WordDirection;
 
 public class CrosswordGridView extends View implements AbstractView {
 
@@ -41,6 +47,8 @@ public class CrosswordGridView extends View implements AbstractView {
 
     private Character[][] letters;
     private Integer[][] numbers;
+
+    private String userInput;
 
     public CrosswordGridView(Context context, AttributeSet attrs) {
 
@@ -275,6 +283,24 @@ public class CrosswordGridView extends View implements AbstractView {
 
         }
 
+        if (name.equals(CrosswordMagicController.GUESSED_WORD_PROPERTY)) {
+
+            if (value instanceof WordDirection) {
+
+                WordDirection result = (WordDirection) value;
+                Context context = getContext();
+                String text;
+
+                if(result.equals(WordDirection.ACROSS) || result.equals(WordDirection.DOWN)) {
+
+                    text = getResources().getString(R.string.word_guessed_correct);
+                    Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+
+                    invalidate();
+                }
+            }
+        }
+
     }
 
     private class OnTouchHandler implements OnTouchListener {
@@ -301,6 +327,34 @@ public class CrosswordGridView extends View implements AbstractView {
                 if (n != 0) {
                     String text = String.format(Locale.getDefault(),"X: %d, Y: %d, Box: %d", x, y, n);
                     Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle(R.string.dialog_title);
+                    builder.setMessage(R.string.dialog_message);
+                    final EditText input = new EditText(context);
+                    input.setInputType(InputType.TYPE_CLASS_TEXT);
+                    builder.setView(input);
+                    builder.setPositiveButton("GUESS", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface d, int i) {
+
+                            userInput = input.getText().toString();
+
+                            Integer num = new Integer(n);
+                            controller.setGuessedWord(userInput);
+                            controller.setBoxNumber(num);
+                            controller.getGuessedWord();
+                        }
+                    });
+                    builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface d, int i) {
+                            userInput = "";
+                            d.cancel();
+                        }
+                    });
+                    AlertDialog aboutDialog = builder.show();
+
                 }
 
             }

@@ -2,4 +2,8 @@
     <string name="app_name">Crossword Magic</string>
     <string name="clue_header_across">ACROSS</string>
     <string name="clue_header_down">DOWN</string>
+    <string name="dialog_title">Enter your guess</string>
+    <string name="dialog_message">Guess a word</string>
+    <string name="word_guessed_correct">Your word is correct! Great Job!</string>
+    <string name="word_guessed_incorrect">Oh No! Your word is incorrect! Try again!</string>
 </resources>
