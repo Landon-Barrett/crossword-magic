@@ -4,6 +4,9 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.sql.Array;
+import java.util.ArrayList;
+
 import edu.jsu.mcis.cs408.crosswordmagic.R;
 import edu.jsu.mcis.cs408.crosswordmagic.controller.CrosswordMagicController;
 import edu.jsu.mcis.cs408.crosswordmagic.model.dao.DAOFactory;
@@ -11,7 +14,7 @@ import edu.jsu.mcis.cs408.crosswordmagic.model.dao.PuzzleDAO;
 
 public class CrosswordMagicModel extends AbstractModel {
 
-    private final int DEFAULT_PUZZLE_ID = 1;
+    //private final int DEFAULT_PUZZLE_ID = 1;
 
     private Puzzle puzzle;
     private Integer[] dimensions = {0, 0};
@@ -23,14 +26,16 @@ public class CrosswordMagicModel extends AbstractModel {
     private String guessedWord;
     private String incorrectGuess;
     private Context context;
+    private ArrayList puzzleList;
 
-    public CrosswordMagicModel(Context context) {
+    public CrosswordMagicModel(Context context, int puzzleId) {
 
 
         DAOFactory daoFactory = new DAOFactory(context);
         PuzzleDAO puzzleDAO = daoFactory.getPuzzleDAO();
 
-        this.puzzle = puzzleDAO.find(DEFAULT_PUZZLE_ID);
+        this.puzzle = puzzleDAO.find(puzzleId);
+        this.puzzleList = puzzleDAO.list();
         this.incorrectGuess = context.getResources().getString(R.string.word_guessed_incorrect);
         this.context = context;
 
@@ -98,6 +103,12 @@ public class CrosswordMagicModel extends AbstractModel {
 
     public void setBoxNumberProperty (Integer boxNum) {
         this.boxNumber = boxNum;
+    }
+
+    public void getPuzzleListProperty() {
+
+        Object[] list = puzzleList.toArray(new PuzzleListItem[]{});
+        firePropertyChange(CrosswordMagicController.PUZZLE_LIST_PROPERTY, null, list);
     }
 
     public void getTestProperty() {

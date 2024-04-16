@@ -13,11 +13,13 @@ import com.opencsv.*;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import edu.jsu.mcis.cs408.crosswordmagic.R;
 import edu.jsu.mcis.cs408.crosswordmagic.model.Puzzle;
+import edu.jsu.mcis.cs408.crosswordmagic.model.PuzzleListItem;
 import edu.jsu.mcis.cs408.crosswordmagic.model.Word;
 import edu.jsu.mcis.cs408.crosswordmagic.model.WordDirection;
 
@@ -168,6 +170,38 @@ public class PuzzleDAO {
 
         return puzzle;
 
+    }
+
+    public ArrayList list() {
+
+        SQLiteDatabase db = daoFactory.getWritableDatabase();
+
+        PuzzleListItem puzzleListItem = null;
+        ArrayList<PuzzleListItem> puzzleList = new ArrayList<>();
+
+        String query = daoFactory.getProperty("sql_get_puzzle_list");
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+
+            cursor.moveToFirst();
+
+            String name = daoFactory.getProperty("sql_field_name");
+            String puzzleId = daoFactory.getProperty("sql_field_id");
+            do {
+
+                String puzzleName = cursor.getString(cursor.getColumnIndexOrThrow(name));
+                int id = Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow(puzzleId)));
+
+                puzzleListItem = new PuzzleListItem(id, puzzleName);
+                puzzleList.add(puzzleListItem);
+            }
+            while( cursor.moveToNext() );
+            cursor.close();
+        }
+        db.close();
+
+        return puzzleList;
     }
 
 }
