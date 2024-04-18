@@ -14,8 +14,6 @@ import edu.jsu.mcis.cs408.crosswordmagic.model.dao.PuzzleDAO;
 
 public class CrosswordMagicModel extends AbstractModel {
 
-    //private final int DEFAULT_PUZZLE_ID = 1;
-
     private Puzzle puzzle;
     private Integer[] dimensions = {0, 0};
     private Character[][] letters;
@@ -86,6 +84,7 @@ public class CrosswordMagicModel extends AbstractModel {
     public void getGuessedWordProperty() {
 
         WordDirection result = puzzle.checkGuess(boxNumber, guessedWord);
+        Boolean solved = puzzle.isSolved();
 
         if (result == null) {
 
@@ -95,10 +94,9 @@ public class CrosswordMagicModel extends AbstractModel {
 
         firePropertyChange(CrosswordMagicController.GUESSED_WORD_PROPERTY, null, result);
 
-
-
-
-
+        if(solved) {
+            firePropertyChange(CrosswordMagicController.PUZZLE_SOLVED_PROPERTY, null, solved);
+        }
     }
 
     public void setBoxNumberProperty (Integer boxNum) {
@@ -109,13 +107,6 @@ public class CrosswordMagicModel extends AbstractModel {
 
         Object[] list = puzzleList.toArray(new PuzzleListItem[]{});
         firePropertyChange(CrosswordMagicController.PUZZLE_LIST_PROPERTY, null, list);
-    }
-
-    public void getTestProperty() {
-
-        String wordCount = (this.puzzle != null ? String.valueOf(puzzle.getSize()) : "none");
-        firePropertyChange(CrosswordMagicController.TEST_PROPERTY, null, wordCount);
-
     }
 
 }

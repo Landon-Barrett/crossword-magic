@@ -28,6 +28,7 @@ import java.util.Map;
 
 import edu.jsu.mcis.cs408.crosswordmagic.R;
 import edu.jsu.mcis.cs408.crosswordmagic.controller.CrosswordMagicController;
+import edu.jsu.mcis.cs408.crosswordmagic.model.Puzzle;
 import edu.jsu.mcis.cs408.crosswordmagic.model.WordDirection;
 
 public class CrosswordGridView extends View implements AbstractView {
@@ -297,6 +298,22 @@ public class CrosswordGridView extends View implements AbstractView {
                     Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
 
                     invalidate();
+                }
+            }
+        }
+
+        if (name.equals(CrosswordMagicController.PUZZLE_SOLVED_PROPERTY)) {
+
+            if (value instanceof Boolean) {
+
+                Boolean solved = (Boolean) value;
+                Context context = getContext();
+                String text;
+
+                if(solved) {
+
+                    text = getResources().getString(R.string.puzzle_solved_message);
+                    Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
                 }
             }
         }

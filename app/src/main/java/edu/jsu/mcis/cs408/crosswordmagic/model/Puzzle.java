@@ -97,7 +97,6 @@ public class Puzzle {
 
         /* add word to guessed list (for development only!) */
 
-        //addWordToGuessed(key); // remove this later!
 
     }
 

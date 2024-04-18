@@ -8,4 +8,5 @@
     <string name="word_guessed_incorrect">Oh No! Your word is incorrect! Try again!</string>
     <string name="button_play">Play Puzzle</string>
     <string name="crossword_magic_cover">CROSSWORD MAGIC</string>
+    <string name="puzzle_solved_message">You solved the puzzle! Congratulations!</string>
 </resources>

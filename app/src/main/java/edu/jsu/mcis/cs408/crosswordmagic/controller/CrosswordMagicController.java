@@ -1,10 +1,8 @@
 package edu.jsu.mcis.cs408.crosswordmagic.controller;
 
-import edu.jsu.mcis.cs408.crosswordmagic.model.CrosswordMagicModel;
 
 public class CrosswordMagicController extends AbstractController {
 
-    public static final String TEST_PROPERTY = "TestProperty";
     public static final String GRID_DIMENSION_PROPERTY = "GridDimensionProperty";
     public static final String GRID_LETTERS_PROPERTY = "GridLettersProperty";
     public static final String GRID_NUMBERS_PROPERTY = "GridNumbersProperty";
@@ -13,11 +11,7 @@ public class CrosswordMagicController extends AbstractController {
     public static final String GUESSED_WORD_PROPERTY = "GuessedWordProperty";
     public static final String BOX_NUMBER_PROPERTY = "BoxNumberProperty";
     public static final String PUZZLE_LIST_PROPERTY = "PuzzleListProperty";
-    private CrosswordMagicModel model;
-
-    public void getTestProperty(String value) {
-        getModelProperty(TEST_PROPERTY);
-    }
+    public static final String PUZZLE_SOLVED_PROPERTY = "PuzzleSolvedProperty";
 
     public void getGridDimensions() {
         getModelProperty(GRID_DIMENSION_PROPERTY);
