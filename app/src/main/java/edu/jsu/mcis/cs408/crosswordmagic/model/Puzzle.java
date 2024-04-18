@@ -95,9 +95,6 @@ public class Puzzle {
             cluesDownBuffer.append(word.getClue()).append(System.lineSeparator());
         }
 
-        /* add word to guessed list (for development only!) */
-
-
     }
 
     public WordDirection checkGuess(Integer num, String guess) {
